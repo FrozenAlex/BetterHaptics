@@ -82,11 +82,21 @@ jobs:
         echo "NAME=${files[0]}" >> ${GITHUB_OUTPUT}
         echo "BUILD_ID=$(readelf -n ${files[0]} | grep -Po "(?<=Build ID: )[0-9a-f]+")" >> ${GITHUB_OUTPUT}
 
+    - name: Rename debug file
+      run: mv "./build/debug/${{ steps.libname.outputs.NAME }}" "./build/debug_${{ steps.libname.outputs.NAME }}"
+
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: ${{ steps.libname.outputs.NAME }}
         path: ./build/${{ steps.libname.outputs.NAME }}
+        if-no-files-found: error
+    
+    - name: Upload debug artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.libname.outputs.NAME }}
+        path: ./build/debug_${{ steps.libname.outputs.NAME }}
         if-no-files-found: error
 
     - name: Upload qmod artifact
