@@ -16,16 +16,22 @@ add_compile_options(-frtti -fexceptions -fvisibility=hidden -fPIE -fPIC)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/utils.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/qpm.cmake)
 
-if(${CMAKE_BUILD_TYPE} STREQUAL "RELEASE" OR ${CMAKE_BUILD_TYPE} STREQUAL "RelWithDebInfo" OR ${CMAKE_BUILD_TYPE} STREQUAL "MinSizeRel")
+if(${CMAKE_BUILD_TYPE} STREQUAL "Release" OR ${CMAKE_BUILD_TYPE} STREQUAL "RelWithDebInfo" OR ${CMAKE_BUILD_TYPE} STREQUAL "MinSizeRel")
+        message(STATUS "Building with optimizations for ${CMAKE_BUILD_TYPE}")
         # Better optimizations
         add_compile_options(-O3)
 
         # LTO
         set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
         add_compile_options(-flto)
+else()
+        message(STATUS "Building without optimizations for ${CMAKE_BUILD_TYPE}")
+        # No optimizations
+        add_compile_options(-O0)
 endif()
 
-if(${CMAKE_BUILD_TYPE} STREQUAL "DEBUG" OR ${CMAKE_BUILD_TYPE} STREQUAL "RelWithDebInfo")
+if(${CMAKE_BUILD_TYPE} STREQUAL "Debug" OR ${CMAKE_BUILD_TYPE} STREQUAL "RelWithDebInfo")
+        message(STATUS "Building with debug symbols for ${CMAKE_BUILD_TYPE}")
         add_compile_options(-g)
 endif()
 
