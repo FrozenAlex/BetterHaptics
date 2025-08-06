@@ -4,13 +4,12 @@
   "name": "${mod_name}",
   "id": "${mod_id}",
   "author": "Crunkle",
-  "version": "0.1.0",
+  "version": "${version}",
   "packageId": "com.beatgames.beatsaber",
   "packageVersion": "1.40.8_7379",
   "description": "Reverts haptic feedback changes without breaking arc and chain notes.",
   "dependencies": [],
   "modFiles": ["${binary}"],
-
   "libraryFiles": [],
   "fileCopies": []
 }
